@@ -1,0 +1,74 @@
+<h1>How's your day going ?</h1>
+
+<div class="col-md-6 float-right">
+    <strong>
+        <p style="font-size: 24px"><span style="padding-right: 20px">{{username}}</span>
+    </strong>
+    <strong><span style="cursor: pointer" data-toggle="modal" data-target="#followingModal">Following:
+            {{usersThatFollowed.length}}</span></strong>
+    <strong><span style="cursor: pointer" data-toggle="modal" data-target="#followersModal">Followers:
+            {{usersThatFollowsMe.length}}</span></p></strong>
+</div>
+
+<form action="/post-message" method="post">
+    <textarea name="postMessage" id="message" cols="60" rows="2"></textarea><br>
+    <button type="submit" id="submitPost">Post</button>
+</form>
+
+<hr>
+<div class="row">
+    <div class="col-md-4 feed-panel">
+        <h2>Minds From Followers</h2>
+        {{#if followersMessages}}
+        {{#each followersMessages}}
+        <strong><a href="/user/{{username}}">{{username}}</a>:</strong>
+        {{data}}
+        <br>
+        <i>{{created_at}}</i>
+        <hr>
+        {{/each}}
+        {{else}}
+        <p>Write your first mind!</p>
+        {{/if}}
+    </div>
+
+    <div class="col-md-4 feed-panel">
+        <h2>Your Minds</h2>
+        {{#if myPosts}}
+        {{#each myPosts}}
+        <strong>{{username}}:</strong>
+        {{data}}
+        <br>
+        <i>{{created_at}}</i>
+        <hr>
+        {{/each}}
+        {{else}}
+        <p>Write your first mind!</p>
+        {{/if}}
+    </div>
+
+    <div class="col-md-4 feed-panel">
+        <h2>Who to follow</h2>
+        {{#if users}}
+        {{#each users}}
+        <strong>{{username}}</strong>
+        <a href="/follow-user/{{username}}">Follow</a>
+        <br>
+        {{/each}}
+        {{else}}
+        <p>There's no one to follow at the moment</p>
+        {{/if}}
+    </div>
+</div>
+{{>following}}
+{{>followers}}
+
+<script>
+    $('#submitPost').on('click', (e) => {
+        const message = document.getElementById("message").value
+        if(message.length < 2) {
+            alert('Your message have to be longer than two symbols.')
+            e.preventDefault()
+        }  
+    })
+</script>

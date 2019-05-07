@@ -1,0 +1,24 @@
+<div class="col-md-6 float-right">
+    <strong><p style="font-size: 24px"><span style="padding-right: 20px">{{user.username}}</span></strong>
+    <strong><span style="cursor: pointer" data-toggle="modal" data-target="#followingModal">Following: {{userFollowing.length}}</span></strong>
+    <strong><span style="cursor: pointer" data-toggle="modal" data-target="#followersModal">Followers: {{userFollowers.length}}</span></p></strong>
+</div>
+
+<hr>
+<div class="col-md-6 float-left">
+<h2>Posts</h2>
+{{#if userPosts}}
+{{#each userPosts}}
+    <strong>{{username}}:</strong>
+    {{data}}
+    <br>
+    <i>{{created_at}}</i>
+    <hr>
+{{/each}}
+{{else}}
+<p>No minds told yet from this user!</p>
+{{/if}}
+</div>
+
+{{>profileFollowing}}
+{{>profileFollowers}}
